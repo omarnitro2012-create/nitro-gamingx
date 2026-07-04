@@ -4,225 +4,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NITRO GAMING | Official</title>
+    <title>NITRO GAMING | Official Site</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        
+        /* 🕹️ Ultra-Sharp Premium Gaming Cursor (Stealth Shard Design) */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M4,4 L26,14 L17,17 L14,26 Z' fill='%230a0a0a' stroke='%23ff3333' stroke-width='2' stroke-linejoin='round'/><path d='M7,7 L21,14 L16,16 L14,21 Z' fill='%23ff3333'/></svg>") 4 4, auto;
+        }
+
+        a, button, .icon-box, #mute-btn, .hvr-elem {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M4,4 L26,14 L17,17 L14,26 Z' fill='%23ff3333' stroke='%23ffffff' stroke-width='2' stroke-linejoin='round'/><path d='M7,7 L21,14 L16,16 L14,21 Z' fill='%23ffffff'/></svg>") 4 4, pointer !important;
         }
         
         body {
-            background-color: #000;
-            color: #ff4d4d;
+            background-color: #030303;
+            color: #ff3333;
             font-family: 'Share Tech Mono', monospace;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
         }
-        
-        @keyframes colorPulse {
-            0%,
-            100% {
-                color: #ff4d4d;
-                text-shadow: 0 0 15px rgba(255, 77, 77, 0.9);
-            }
-            50% {
-                color: #500000;
-                text-shadow: 0 0 5px rgba(255, 77, 77, 0.2);
-            }
+
+        #bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
         
         @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
-        
-        @keyframes floatUpDown {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
-        }
-        
-        #landing {
+
+        #loader-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9999;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            width: 100%;
-            position: relative;
-            z-index: 10;
+            transition: opacity 0.8s ease, filter 0.8s ease;
         }
-        
-        .center-section {
-            text-align: center;
-            transform: translateY(-20px);
-        }
-        
-        .nx-logo {
-            font-size: 4.2rem;
-            letter-spacing: 18px;
+
+        .load-percentage {
+            font-size: 5rem;
             font-weight: bold;
-            color: #ff4d4d;
-            text-shadow: 0 0 15px rgba(255, 77, 77, 0.9);
-            animation: fadeInUp 1s forwards, colorPulse 3s infinite;
-            opacity: 0;
+            text-shadow: 0 0 20px #ff3333;
+            margin-bottom: 10px;
         }
-        
-        .typewriter-box {
-            height: 30px;
-            margin-top: 15px;
-            color: #ff4d4d;
-            font-size: 1.1rem;
-            letter-spacing: 6px;
-            animation: fadeInUp 1s forwards 0.5s;
-            opacity: 0;
-        }
-        
-        .btn-wrapper {
-            position: absolute;
-            bottom: 60px;
-            animation: fadeInUp 1s forwards 1.2s;
-            opacity: 0;
-            cursor: pointer;
-            text-align: center;
+
+        .load-status {
+            font-size: 1rem;
+            letter-spacing: 5px;
+            color: #888;
+            margin-bottom: 40px;
         }
         
         .enter-btn {
             background: #0a0a0a;
-            border: 1px solid #ff4d4d;
-            color: #ff4d4d;
+            border: 2px solid #ff3333;
+            color: #ff3333;
             padding: 18px 85px;
             border-radius: 50px;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             letter-spacing: 6px;
-            display: flex;
+            display: none;
             align-items: center;
             gap: 15px;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.2);
             transition: 0.4s;
+            animation: fadeInUp 0.5s forwards;
         }
         
-        .btn-wrapper:hover .enter-btn {
-            box-shadow: 0 0 40px rgba(255, 77, 77, 0.6);
-            background: #1a0000;
+        .enter-btn:hover {
+            box-shadow: 0 0 40px rgba(255, 51, 51, 0.7);
+            background: #200000;
+            transform: scale(1.05);
         }
-        
-        .press-hint {
-            color: #ff4d4d;
-            font-size: 0.75rem;
-            margin-top: 20px;
-            letter-spacing: 5px;
-            animation: colorPulse 2s infinite;
+
+        .glitch-logo {
+            font-size: 3.8rem;
+            font-weight: bold;
+            letter-spacing: 12px;
+            position: relative;
+            color: #ff3333;
+            text-shadow: 0 0 15px rgba(255, 51, 51, 0.8);
+            margin-bottom: 25px;
         }
-        
+
+        .glitch-logo::before, .glitch-logo::after {
+            content: 'NITRO GAMING';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #030303;
+        }
+
+        .glitch-logo::before {
+            left: 2px;
+            text-shadow: -2px 0 #00ffff;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch-logo::after {
+            left: -2px;
+            text-shadow: -2px 0 #ff00ff;
+            clip: rect(85px, 450px, 140px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(31px, 9999px, 94px, 0); }
+            10% { clip: rect(112px, 9999px, 76px, 0); }
+            20% { clip: rect(85px, 9999px, 5px, 0); }
+            100% { clip: rect(67px, 9999px, 125px, 0); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(76px, 9999px, 116px, 0); }
+            11% { clip: rect(43px, 9999px, 98px, 0); }
+            50% { clip: rect(122px, 9999px, 15px, 0); }
+            100% { clip: rect(9px, 9999px, 55px, 0); }
+        }
+
         #main-content {
             display: none;
-            width: 650px;
+            width: 580px;
+            z-index: 5;
+            position: relative;
         }
         
         .nx-card {
-            background: #050505;
-            border: 1px solid #200000;
-            border-radius: 30px;
-            padding: 70px 20px;
+            background: rgba(5, 5, 5, 0.85);
+            border: 2px solid #250000;
+            border-radius: 25px;
+            padding: 45px 30px;
             text-align: center;
-            box-shadow: 0 10px 60px rgba(0, 0, 0, 0.9);
-            animation: floatUpDown 4s infinite ease-in-out;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
         }
         
         #clock {
-            font-size: 4.5rem;
-            color: #ff4d4d;
-            margin-bottom: 15px;
-            animation: colorPulse 4s infinite;
+            font-size: 4rem;
+            color: #ff3333;
+            text-shadow: 0 0 15px rgba(255, 51, 51, 0.8);
+            margin-bottom: 5px;
         }
         
         #date {
-            font-size: 1rem;
-            color: #ffffff;
-            margin-bottom: 50px;
-            letter-spacing: 3px;
-            opacity: 0.9;
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 25px;
+            letter-spacing: 4px;
+        }
+
+        .visualizer-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 30px;
+            gap: 4px;
+            margin-bottom: 30px;
+        }
+
+        .bar {
+            width: 4px;
+            height: 5px;
+            background-color: #ff3333;
+            box-shadow: 0 0 8px #ff3333;
+            transition: height 0.1s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 35px;
+            border-top: 1px solid #200000;
+            border-bottom: 1px solid #200000;
+            padding: 20px 0;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        .stat-lbl {
+            font-size: 0.75rem;
+            color: #ff3333;
+            letter-spacing: 2px;
+            margin-top: 5px;
         }
         
         .social-row {
             display: flex;
-            gap: 22px;
+            gap: 20px;
             justify-content: center;
-            flex-wrap: wrap;
         }
         
         .icon-box {
-            width: 60px;
-            height: 60px;
-            background: #0f0f0f;
+            width: 55px;
+            height: 55px;
+            background: #0a0a0a;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
             text-decoration: none;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             border: 1px solid #222;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             opacity: 0.7;
         }
         
-        .youtube:hover {
-            color: #FF0000 !important;
-            border-color: #FF0000 !important;
-            transform: rotate(360deg) scale(1.2);
+        .icon-box:hover {
+            transform: scale(1.2) translateY(-5px);
             opacity: 1;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
         }
 
-        .facebook:hover {
-            color: #1877F2 !important;
-            border-color: #1877F2 !important;
-            transform: rotate(360deg) scale(1.2);
-            opacity: 1;
-            box-shadow: 0 0 15px rgba(24, 119, 242, 0.4);
-        }
-
-        .discord:hover {
-            color: #5865F2 !important;
-            border-color: #5865F2 !important;
-            transform: rotate(360deg) scale(1.2);
-            opacity: 1;
-            box-shadow: 0 0 15px rgba(88, 101, 242, 0.4);
-        }
-        
-        .tiktok:hover {
-            color: #fff !important;
-            border-color: #ff0050 !important;
-            text-shadow: 2px 0 #ff0050, -2px 0 #00f2ea;
-            box-shadow: 0 0 15px rgba(255, 0, 80, 0.5);
-            transform: rotate(360deg) scale(1.2);
-            opacity: 1;
-        }
-        
-        .instagram:hover {
-            color: #E1306C !important;
-            border-color: #E1306C !important;
-            transform: rotate(360deg) scale(1.2);
-            opacity: 1;
-            box-shadow: 0 0 15px rgba(225, 48, 108, 0.4);
-        }
+        .youtube:hover { color: #FF0000!important; border-color: #FF0000!important; box-shadow: 0 0 15px #FF0000; }
+        .facebook:hover { color: #1877F2!important; border-color: #1877F2!important; box-shadow: 0 0 15px #1877F2; }
+        .discord:hover { color: #5865F2!important; border-color: #5865F2!important; box-shadow: 0 0 15px #5865F2; }
+        .tiktok:hover { color: #fff!important; border-color: #ff0050!important; box-shadow: 0 0 15px #ff0050; text-shadow: 2px 0 #ff0050, -2px 0 #00f2ea; }
+        .instagram:hover { color: #E1306C!important; border-color: #E1306C!important; box-shadow: 0 0 15px #E1306C; }
         
         #mute-btn {
             position: fixed;
@@ -231,110 +262,227 @@
             width: 55px;
             height: 55px;
             background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #ff4d4d;
+            border: 2px solid #ff3333;
             border-radius: 50%;
-            color: #ff4d4d;
+            color: #ff3333;
             display: none;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
             z-index: 1000;
-        }
-        
-        .fade-out {
-            opacity: 0;
-            filter: blur(20px);
-            transition: 0.8s;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- مشغل صوت مباشر ومضمون للأغنية المطلوبة وبيلف علطول -->
-    <audio id="audio-player" loop>
-        <source src="music.mp3" type="audio/mpeg">
+    <audio id="audio-player" loop preload="auto">
+        <source src="https://f005.backblazeb2.com/file/nitro-music/gio-pika-remix.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="landing">
-        <div class="center-section">
-            <div class="nx-logo">NITRO GAMING</div>
-            <div class="typewriter-box">
-                <span id="text-target"></span><span style="color:#ff4d4d; animation: blink 0.6s infinite;">|</span>
-            </div>
-        </div>
+    <audio id="hover-sound" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-84.wav" type="audio/wav">
+    </audio>
 
-        <div class="btn-wrapper" onclick="start()">
-            <button class="enter-btn"><i class="fa-solid fa-arrow-right-to-bracket"></i> ENTER</button>
-            <div class="press-hint">PRESS TO ENTER</div>
-        </div>
+    <canvas id="bg-canvas"></canvas>
+
+    <div id="loader-screen">
+        <div class="load-percentage" id="upload-pct">0%</div>
+        <div class="load-status" id="load-txt">INITIALIZING SYSTEMS...</div>
+        <button class="enter-btn" id="launch-btn" onclick="start()"><i class="fa-solid fa-terminal"></i> ENTER SYSTEM</button>
     </div>
 
     <div id="main-content">
         <div class="nx-card">
+            <div class="glitch-logo">NITRO GAMING</div>
+            
             <div id="clock">00:00:00 PM</div>
-            <div id="date">LOADING...</div>
+            <div id="date">LOADING DATA...</div>
+
+            <div class="visualizer-container" id="visualizer">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
+
+            <!-- 📊 Updated Stats Section -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <!-- Unlimited/Infinity Sign -->
+                    <div class="stat-val" id="stat-followers" style="text-shadow: 0 0 15px rgba(255,255,255,0.6);">0</div>
+                    <div class="stat-lbl">FOLLOWERS</div>
+                </div>
+                <div class="stat-box">
+                    <!-- 100% Winrate -->
+                    <div class="stat-val" id="stat-winrate" style="color: #00ffcc; text-shadow: 0 0 12px #00ffcc;">0%</div>
+                    <div class="stat-lbl">WIN RATE</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" style="color: gold; text-shadow: 0 0 10px gold;">CONQ</div>
+                    <div class="stat-lbl">PUBG RANK</div>
+                </div>
+            </div>
+
             <div class="social-row">
-                <a href="https://www.youtube.com/channel/UCTzGua-KzO8C1P9EyTmQ-4w" target="_blank" class="icon-box youtube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://www.facebook.com/profile.php?id=61591571431329" target="_blank" class="icon-box facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://discord.gg/4FS9eaBvfG" target="_blank" class="icon-box discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://www.tiktok.com/@xomerpubgm" target="_blank" class="icon-box tiktok"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="https://www.instagram.com/initrogamingz" target="_blank" class="icon-box instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/channel/UCTzGua-KzO8C1P9EyTmQ-4w" target="_blank" class="icon-box youtube hvr-elem"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61591571431329" target="_blank" class="icon-box facebook hvr-elem"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://discord.gg/4FS9eaBvfG" target="_blank" class="icon-box discord hvr-elem"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.tiktok.com/@xomerpubgm" target="_blank" class="icon-box tiktok hvr-elem"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/initrogamingz" target="_blank" class="icon-box instagram hvr-elem"><i class="fa-brands fa-instagram"></i></a>
             </div>
         </div>
     </div>
 
-    <div id="mute-btn" onclick="toggleAudio()">
+    <div id="mute-btn" onclick="toggleAudio()" class="hvr-elem">
         <i id="mute-icon" class="fa-solid fa-volume-high"></i>
     </div>
 
     <script>
         const myAudio = document.getElementById('audio-player');
-        myAudio.volume = 0.8; // ضبط الصوت على 80% عشان الباس عالي
+        const hvrSound = document.getElementById('hover-sound');
+        myAudio.volume = 0.8;
+        hvrSound.volume = 0.2;
 
-        const words = ["CONTENT CREATOR", "PUBG MOBILE", "xomerpubgm", "NITRO ON TOP"];
-        let wordIdx = 0;
-        const target = document.getElementById("text-target");
+        const hoverElements = document.querySelectorAll('.hvr-elem');
+        hoverElements.forEach(elem => {
+            elem.addEventListener('mouseenter', () => {
+                hvrSound.currentTime = 0;
+                hvrSound.play().catch(() => {});
+            });
+        });
 
-        function scrambleShow() {
-            const finalWord = words[wordIdx];
-            let iteration = 0;
-            const interval = setInterval(() => {
-                target.innerText = finalWord.split("").map((l, i) => i < iteration ? finalWord[i] : "!?&#" [Math.floor(Math.random() * 4)]).join("");
-                if (iteration >= finalWord.length) {
-                    clearInterval(interval);
-                    setTimeout(deleteText, 1800);
-                }
-                iteration += 1 / 3;
-            }, 40);
-        }
-
-        function deleteText() {
-            let txt = target.innerText;
-            if (txt.length > 0) {
-                target.innerText = txt.substring(0, txt.length - 1);
-                setTimeout(deleteText, 30);
+        let count = 0;
+        const counter = setInterval(() => {
+            count += Math.floor(Math.random() * 7) + 2;
+            if(count >= 100) {
+                count = 100;
+                clearInterval(counter);
+                document.getElementById('upload-pct').innerText = "100%";
+                document.getElementById('load-txt').innerText = "ALL SYSTEMS OPERATIONAL";
+                document.getElementById('launch-btn').style.display = 'flex';
             } else {
-                wordIdx = (wordIdx + 1) % words.length;
-                setTimeout(scrambleShow, 100);
+                document.getElementById('upload-pct').innerText = count + "%";
+            }
+        }, 80);
+
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 0.5 - 0.2;
+                this.alpha = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#ff3333';
+                ctx.fillStyle = '#ff3333';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
             }
         }
 
-        function start() {
-            // تشغيل تراك جيو بيكا فوراً عند الدخول
-            myAudio.play().catch(err => console.log("Audio play deferred: ", err));
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < 65; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+        initParticles();
 
-            const landing = document.getElementById('landing');
-            landing.classList.add('fade-out');
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        const bars = document.querySelectorAll('.bar');
+        let visInterval;
+        
+        function startVisualizer() {
+            visInterval = setInterval(() => {
+                if(!myAudio.paused) {
+                    bars.forEach(bar => {
+                        let h = Math.floor(Math.random() * 28) + 4;
+                        bar.style.height = h + 'px';
+                    });
+                }
+            }, 90);
+        }
+
+        // 📊 Smooth Multi-Counter Animation Engine
+        function animateStats() {
+            const followers = document.getElementById('stat-followers');
+            const winrate = document.getElementById('stat-winrate');
+            
+            let fCount = 0;
+            let wCount = 0;
+
+            // عدّاد الفولورز السريع اللي بينتهي بـ علامة Unlimited
+            const fInterval = setInterval(() => {
+                fCount += 3850;
+                if(fCount >= 99999) { 
+                    clearInterval(fInterval); 
+                    followers.innerText = '∞'; // Unlimited Symbol
+                } else {
+                    followers.innerText = fCount.toLocaleString();
+                }
+            }, 30);
+
+            // عدّاد الـ Win Rate لحد 100% بالظبط
+            const wInterval = setInterval(() => {
+                wCount += 4;
+                if(wCount >= 100) { 
+                    wCount = 100; 
+                    clearInterval(wInterval); 
+                }
+                winrate.innerText = wCount + '%';
+            }, 35);
+        }
+
+        function start() {
+            myAudio.play().catch(e => console.log("Interaction required"));
+            startVisualizer();
+            
+            const loader = document.getElementById('loader-screen');
+            loader.style.opacity = '0';
+            loader.style.filter = 'blur(15px)';
+            
             setTimeout(() => {
-                landing.style.display = 'none';
+                loader.style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
-                document.getElementById('main-content').style.animation = 'fadeInUp 1s forwards';
+                document.getElementById('main-content').style.animation = 'fadeInUp 0.8s forwards';
                 document.getElementById('mute-btn').style.display = 'flex';
+                animateStats();
             }, 800);
         }
 
-        // تحويل الزرار ليقوم بعمل Mute/Unmute كامل وتشغيل وإيقاف الأيقونة
         function toggleAudio() {
             const icon = document.getElementById('mute-icon');
             if (myAudio.paused) {
@@ -343,30 +491,25 @@
             } else {
                 myAudio.pause();
                 icon.className = 'fa-solid fa-volume-xmark';
+                bars.forEach(bar => bar.style.height = '5px');
             }
         }
 
         function updateClock() {
             const now = new Date();
-            let h = now.getHours(),
-                m = now.getMinutes(),
-                s = now.getSeconds();
+            let h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
             let ampm = h >= 12 ? 'PM' : 'AM';
             h = h % 12 || 12;
             m = m < 10 ? '0' + m : m;
             s = s < 10 ? '0' + s : s;
             document.getElementById('clock').innerText = `${h}:${m}:${s} ${ampm}`;
             document.getElementById('date').innerText = now.toLocaleDateString('en-US', {
-                weekday: 'short',
-                month: 'short',
-                day: '2-digit',
-                year: 'numeric'
+                weekday: 'short', month: 'short', day: '2-digit', year: 'numeric'
             }).toUpperCase();
         }
 
         setInterval(updateClock, 1000);
         updateClock();
-        scrambleShow();
     </script>
 </body>
 
