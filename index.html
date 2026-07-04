@@ -275,8 +275,9 @@
 
 <body>
 
+    <!-- 🎵 تعديل المسار ليقرأ من نفس المجلد مباشرة -->
     <audio id="audio-player" loop preload="auto">
-        <source src="https://f005.backblazeb2.com/file/nitro-music/gio-pika-remix.mp3" type="audio/mpeg">
+        <source src="music.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="hover-sound" preload="auto">
@@ -304,15 +305,12 @@
                 <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
             </div>
 
-            <!-- 📊 Updated Stats Section -->
             <div class="stats-grid">
                 <div class="stat-box">
-                    <!-- Unlimited/Infinity Sign -->
                     <div class="stat-val" id="stat-followers" style="text-shadow: 0 0 15px rgba(255,255,255,0.6);">0</div>
                     <div class="stat-lbl">FOLLOWERS</div>
                 </div>
                 <div class="stat-box">
-                    <!-- 100% Winrate -->
                     <div class="stat-val" id="stat-winrate" style="color: #00ffcc; text-shadow: 0 0 12px #00ffcc;">0%</div>
                     <div class="stat-lbl">WIN RATE</div>
                 </div>
@@ -436,7 +434,6 @@
             }, 90);
         }
 
-        // 📊 Smooth Multi-Counter Animation Engine
         function animateStats() {
             const followers = document.getElementById('stat-followers');
             const winrate = document.getElementById('stat-winrate');
@@ -444,18 +441,16 @@
             let fCount = 0;
             let wCount = 0;
 
-            // عدّاد الفولورز السريع اللي بينتهي بـ علامة Unlimited
             const fInterval = setInterval(() => {
                 fCount += 3850;
                 if(fCount >= 99999) { 
                     clearInterval(fInterval); 
-                    followers.innerText = '∞'; // Unlimited Symbol
+                    followers.innerText = '∞';
                 } else {
                     followers.innerText = fCount.toLocaleString();
                 }
             }, 30);
 
-            // عدّاد الـ Win Rate لحد 100% بالظبط
             const wInterval = setInterval(() => {
                 wCount += 4;
                 if(wCount >= 100) { 
